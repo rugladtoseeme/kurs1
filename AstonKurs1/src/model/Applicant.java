@@ -1,46 +1,57 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 
 public class Applicant extends Person{
 
-	private ArrayList<Department> departmentList;
+	private HashMap<Department, Double> departmentList;
 	
-	private Double GPA;
+	private HashMap<Department, Boolean> isEntered;
 	
-	private Boolean isEntered;
-	
-	public Applicant(String fio, ArrayList<Department> departmentList) {
+	public Applicant(String fio) {
 		super(fio);
-		this.departmentList = departmentList;
-		isEntered = false;
+		this.departmentList = new HashMap<>();
+		isEntered = new HashMap<>();
+	}
+	
+	public Double getGPA(Department departmant)
+	{
+		return departmentList.get(departmant);
+	}
+	
+	public Double setGPA(Department departmant, Double val)
+	{
+		return departmentList.put(departmant, val);
 	}
 
-	public ArrayList<Department> getDepartmentList() {
+	public HashMap<Department, Double> getDepartmentList() {
 		return departmentList;
 	}
 
-	public void setDepartmentList(ArrayList<Department> departmentList) {
+	public void setDepartmentList(HashMap<Department, Double> departmentList) {
 		this.departmentList = departmentList;
 	}
 
-	public Double getGPA() {
-		return GPA;
-	}
-
-	public Boolean getIsEntered() {
+	public HashMap<Department, Boolean> getIsEntered() {
 		return isEntered;
 	}
 
-	public void setIsEntered(boolean isEntered) {
+	public void setIsEntered(HashMap<Department, Boolean> isEntered) {
 		this.isEntered = isEntered;
+	}
+	
+	public void setEnteredExam(Department departmant, Boolean isEntered) {
+		this.isEntered.put(departmant, isEntered);
 	}
 
 	public void addDepartment(Department department)
 	{
-		departmentList.add(department);
+		departmentList.put(department, 0.);
+		isEntered.put(department, false);
+		department.addApplicant(this);
 	}
 
 	@Override
@@ -48,27 +59,32 @@ public class Applicant extends Person{
 		return "Applicant " + super.getFio() + ", wants to apply to departments: " + departmentList.toString();
 	}
 	
-	public HashSet<Exam> examsToPass()
-	{
-		HashSet<Exam> exams = new HashSet<Exam>();
-		for (Department dep: departmentList)
-		{
-			exams.addAll(dep.getExamList());
-		}
-		return exams;
+	public void resultOFExams() {
+		System.out.println("Applicant " + super.getFio() + ", ");
+		System.out.print("Marks: ");
+		
+		departmentList.forEach((k,v)->{
+			System.out.print(k.getName() + ": DPA = ");
+			System.out.print(v + ", ");
+			});
+		
+		System.out.println("");
+		isEntered.forEach((k,v)->{
+			System.out.print(k.getName() + " - ");
+			System.out.print(v?"entered, ":"not entered, ");
+			});
+		
+		System.out.println("");
+		System.out.println("");
 	}
 	
-	public void passAllExams()
+	public void passExams()
 	{
-		Integer marksSum = 0;
-		HashSet<Exam> exams = examsToPass();
-		
-		for (Exam exam: exams)
-		{
-			marksSum += exam.passExam();
-		}
-		
-		GPA = (marksSum * 1.)/exams.size();
+		departmentList.forEach((k,v)->{
+			v = k.passAllExams();
+			setGPA(k, k.passAllExams());
+			//setEnteredExam(k, );
+			});
 	}
 	
 }

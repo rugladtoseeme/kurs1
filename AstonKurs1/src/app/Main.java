@@ -16,59 +16,70 @@ public class Main {
 		Teacher mathTeacher = new Teacher("Anna Ivanovna");
 		Teacher infTeacher = new Teacher("Roman Grigorievich");
 		Teacher physicsTeacher = new Teacher("Alexander Petrovich");
+		Teacher historyTeacher = new Teacher("Xenofont Abramovich");
+		Teacher russianTeacher = new Teacher("Maria Petrovna");
+		Teacher biologyTeacher = new Teacher("Elena Dmitrievna");
 		
 		Exam mathExam = new Exam(mathTeacher, "Math exam");
 		Exam infExam = new Exam(infTeacher, "Informatics exam");
 		Exam physExam = new Exam(physicsTeacher, "Physics exam");
+		Exam histExam = new Exam(historyTeacher, "History exam");
+		Exam rusExam = new Exam(russianTeacher, "Russian exam");
+		Exam bioExam = new Exam(biologyTeacher, "Biology exam");
 		
 		ArrayList<Exam> ammExamList = new ArrayList<>();
 		ammExamList.add(infExam);
 		ammExamList.add(mathExam);
+		ammExamList.add(rusExam);
 		
 		ArrayList<Exam> fknExamList = new ArrayList<>();
 		fknExamList.add(physExam);
 		fknExamList.add(mathExam);
+		fknExamList.add(rusExam);
+		
+		ArrayList<Exam> histExamList = new ArrayList<>();
+		histExamList.add(histExam);
+		histExamList.add(rusExam);
+		
+		ArrayList<Exam> bioExamList = new ArrayList<>();
+		bioExamList.add(bioExam);
+		bioExamList.add(rusExam);
+		bioExamList.add(mathExam);
 		
 		Department AMMDepartmant = new Department("amm department", ammExamList);
 		Department FKNDepartmant = new Department("fkn departmant", fknExamList);
+		Department HistoryDepartmant = new Department("history departmant", histExamList);
+		Department BiologyDepartmant = new Department("biology departmant", bioExamList);
 		
-		Applicant app1 = new Applicant("ivan ivanov", new ArrayList<>());
+		Applicant app1 = new Applicant("ivan ivanov");
 		app1.addDepartment(FKNDepartmant);
 		app1.addDepartment(AMMDepartmant);
-		Applicant app2 = new Applicant("petr petrov", new ArrayList<>());
+		app1.addDepartment(BiologyDepartmant);
+		Applicant app2 = new Applicant("petr petrov");
 		app2.addDepartment(FKNDepartmant);
-		Applicant app3 = new Applicant("luda ludina", new ArrayList<>());
+		app2.addDepartment(HistoryDepartmant);
+		Applicant app3 = new Applicant("luda ludina");
 		app3.addDepartment(AMMDepartmant);
+		app3.addDepartment(HistoryDepartmant);
+		app3.addDepartment(BiologyDepartmant);
+		Applicant app4 = new Applicant("sofia popova");
+		app4.addDepartment(AMMDepartmant);
+		app4.addDepartment(HistoryDepartmant);
 		
-		app1.passAllExams();
-		app2.passAllExams();
-		app3.passAllExams();
+		app1.passExams();
+		app2.passExams();
+		app3.passExams();
+		app4.passExams();
 		
-//		System.out.print(app1.getFio() + " GPA: " + app1.getGPA());
-//		System.out.println("");
-//		
-//		System.out.print(app2.getFio() + " GPA: " + app2.getGPA());
-//		System.out.println("");
-//		
-//		System.out.print(app3.getFio() + " GPA: " + app3.getGPA());
-//		System.out.println("");
+		RankingService.rankApplicants(AMMDepartmant, 2);
+		RankingService.rankApplicants(FKNDepartmant, 2);
+		RankingService.rankApplicants(BiologyDepartmant, 2);
+		RankingService.rankApplicants(HistoryDepartmant, 2);
 		
-		ArrayList<Applicant> appList = new ArrayList<>();
-		appList.add(app1);
-		appList.add(app2);
-		appList.add(app3);
-		
-		RankingService.rankApplicants(appList, 2);
-		
-		System.out.print(app1.getFio() + " GPA: " + app1.getGPA() + " passed:" + app1.getIsEntered());
-		System.out.println("");
-		
-		System.out.print(app2.getFio() + " GPA: " + app2.getGPA() + " passed:" + app2.getIsEntered());
-		System.out.println("");
-		
-		System.out.print(app3.getFio() + " GPA: " + app3.getGPA() + " passed:" + app3.getIsEntered());
-		System.out.println("");
-		
+		app1.resultOFExams();
+		app2.resultOFExams();
+		app3.resultOFExams();
+		app4.resultOFExams();	
 		
 	}
 

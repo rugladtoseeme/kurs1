@@ -5,23 +5,24 @@ import java.util.Collections;
 import java.util.Comparator;
 
 import model.Applicant;
+import model.Department;
 
 public class RankingService {
 
-	public static void rankApplicants(ArrayList<Applicant> applicantsList, int numberOfPassed)
+	public static void rankApplicants(Department department, int numberOfPassed)
 	{
-		Collections.sort(applicantsList, new Comparator<Applicant>() {
+		Collections.sort(department.getApplicantList(), new Comparator<Applicant>() {
 			public int compare(Applicant o1, Applicant o2) {
-				return o2.getGPA().compareTo(o1.getGPA());
+				return o2.getGPA(department).compareTo(o1.getGPA(department));
 			}
 		});
 		
 		int counter = 0;
-		for (Applicant app: applicantsList)
+		for (Applicant app: department.getApplicantList())
 		{
 			if (counter == numberOfPassed)
 				break;
-			app.setIsEntered(true);
+			app.setEnteredExam(department, true);
 			counter++;
 		}
 	}
