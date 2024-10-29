@@ -12,7 +12,7 @@ import service.RankingService;
 public class Main {
 
 	public static void main(String[] args) {
-
+ 
 		Teacher mathTeacher = new Teacher("Anna Ivanovna");
 		Teacher infTeacher = new Teacher("Roman Grigorievich");
 		Teacher physicsTeacher = new Teacher("Alexander Petrovich");
